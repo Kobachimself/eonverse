@@ -1,0 +1,66 @@
+/* registration-styles.css */
+
+.registration-form {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-image {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+.registration-form h2 {
+    margin-bottom: 20px;
+}
+
+.registration-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.registration-form input[type="text"],
+.registration-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.registration-form button.register-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.registration-form button.register-button:hover {
+    background-color: #45a049;
+}
+
+.registration-form .back-link {
+    margin-top: 15px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.registration-form .back-link a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Rest of your registration-specific styles */
