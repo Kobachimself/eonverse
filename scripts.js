@@ -10,6 +10,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             ipElement.textContent = ip;
             onlineCountElement.textContent = onlineCount;
+
+            // Add event listener for Buy Now button
+            const buyNowBtn = document.getElementById("buyNowBtn");
+            buyNowBtn.addEventListener("click", function () {
+                // Replace the URL with your actual payment link
+                window.location.href = "https://eonverse.space/store";
+            });
         })
         .catch(error => {
             console.error("Error fetching server information:", error);
