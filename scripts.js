@@ -1,51 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const ranks = {
-        'VIP': { price: 5, description: 'Access to VIP features' },
-        'VIP+': { price: 7, description: 'Access to all VIP features and VIP+' },
-        'ULTRA': { price: 10, description: 'Access to VIP+ and all ULTRA features' },
-        'LEGEND': { price: 16, description: 'Access to ALL features and LEGEND Features' }
-    };
-
     const overlay = document.getElementById('overlay');
     const popup = document.getElementById('popup');
     const detailsForm = document.getElementById('details-form');
-    const discordUsernameInput = document.getElementById('discord-username');
-    const minecraftUsernameInput = document.getElementById('minecraft-username');
-    const purchaseRankInput = document.getElementById('purchase-rank');
-    const purchaseAmountInput = document.getElementById('purchase-amount');
-
-     const buyButtons = document.querySelectorAll('.buy-btn');
-
-    buyButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const rank = this.dataset.rank; // Get the rank associated with the button
-            // Redirect to the payment site based on the rank
-            if (rank === 'VIP') {
-                window.location.href = 'https://example.com/payment/vip';
-            } else if (rank === 'VIP+') {
-                window.location.href = 'https://example.com/payment/vip-plus';
-            } else if (rank === 'ULTRA') {
-                window.location.href = 'https://example.com/payment/ultra';
-            } else if (rank === 'LEGEND') {
-                window.location.href = 'https://example.com/payment/legend';
-            }
-        });
-    });
-});
+    const paypalButtonContainer = document.getElementById('paypal-button-container');
 
     detailsForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        const discordUsername = discordUsernameInput.value;
-        const minecraftUsername = minecraftUsernameInput.value;
-        const rank = purchaseRankInput.value;
-        const amount = purchaseAmountInput.value;
+        const discordUsername = document.getElementById('discord-username').value;
+        const minecraftUsername = document.getElementById('minecraft-username').value;
+        const purchaseRank = document.getElementById('purchase-rank').value;
+        const purchaseAmount = document.getElementById('purchase-amount').value;
 
         const purchaseData = {
             discordUsername,
             minecraftUsername,
-            rank,
-            amount
+            rank: purchaseRank,
+            amount: purchaseAmount
         };
 
         fetch('/api/purchase', {
@@ -63,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(data => {
             console.log(data.message);
-            alert('Purchase successful!'); // You can customize this part later
+            alert('Purchase successful!');
             overlay.classList.remove('active');
         })
         .catch(error => {
@@ -78,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: purchaseAmountInput.value
+                        value: document.getElementById('purchase-amount').value
                     }
                 }]
             });
@@ -89,17 +60,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 sendPurchaseInfo(details);
             });
         }
-    }).render('#paypal-button-container');
+    }).render(paypalButtonContainer);
 
-    // Function to send purchase information to the backend
-    function sendPurchaseInfo(details) {
-        const purchaseData = {
-            rank: purchaseRankInput.value,
-            amount: details.purchase_units[0].amount.value,
-            discordUsername: discordUsernameInput.value,
-            minecraftUsername: minecraftUsernameInput.value
-        };
-         // Function to enable Buy button functionality
+    function openPopup(rank) {
+        overlay.classList.add('active');
+        document.getElementById('purchase-rank').value = rank;
+    }
+
+    function closePopup() {
+        overlay.classList.remove('active');
+    }
+
+    const buyButtons = document.querySelectorAll('.buy-btn');
+    buyButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const rank = this.getAttribute('data-rank');
+            openPopup(rank);
+        });
+    });
+
+    // Function to enable Buy button functionality
     function enableBuyButtons() {
         const buyButtons = document.querySelectorAll('.buy-btn');
         buyButtons.forEach(button => {
@@ -117,9 +97,13 @@ document.addEventListener("DOMContentLoaded", function () {
         alert(`You clicked Buy for ${rank} rank. Price: $${price}`);
     }
 
-    // Fetch server information when the page loads
-    fetchServerInfo();
-});
+    function sendPurchaseInfo(details) {
+        const purchaseData = {
+            rank: document.getElementById('purchase-rank').value,
+            amount: details.purchase_units[0].amount.value,
+            discordUsername: document.getElementById('discord-username').value,
+            minecraftUsername: document.getElementById('minecraft-username').value
+        };
 
         fetch('/api/purchase', {
             method: 'POST',
@@ -132,13 +116,18 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!response.ok) {
                 throw new Error('Error sending purchase data to the server');
             }
-            // Handle successful response from the server
             alert('Purchase successful!');
-            overlay.classList.remove('active');
+            closePopup();
         })
         .catch(error => {
             console.error('Error sending purchase data:', error);
             alert('Error making purchase. Please try again.');
         });
     }
+
+    function fetchServerInfo() {
+        // Implement logic to fetch server information
+    }
+
+    fetchServerInfo();
 });
