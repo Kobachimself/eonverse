@@ -1,117 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EonVerse Store</title>
-    <!-- Add your stylesheets and other meta tags as needed -->
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #2c2f33;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
+document.addEventListener("DOMContentLoaded", function () {
+    // Function to fetch server information
+    function fetchServerInfo() {
+        const ip = "eonverse.club"; // Your server's IP
 
-        .container {
-            text-align: center;
-        }
+        fetch(`https://api.mcsrvstat.us/2/${ip}`)
+            .then(response => response.json())
+            .then(data => {
+                const onlineCount = data.players ? data.players.online || 0 : 0;
+                const ipElement = document.querySelector(".ip-address");
+                const onlineCountElement = document.querySelector(".online-count");
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px #7289da;
-        }
+                ipElement.textContent = ip;
+                onlineCountElement.textContent = onlineCount;
 
-        .rank-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
+                renderPayPalButton();
+            })
+            .catch(error => {
+                console.error("Error fetching server information:", error);
+                renderPayPalButton();
+            });
+    }
 
-        .rank {
-            padding: 15px 25px;
-            background-color: #7289da;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 0 20px #7289da;
-            animation: glow 1.5s ease-in-out infinite alternate;
-        }
-
-        .rank p {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .rank:hover {
-            background-color: #3a4d9a;
-            box-shadow: 0 0 30px #3a4d9a;
-        }
-
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 20px #7289da;
+    // Function to render PayPal Smart Payment Buttons
+    function renderPayPalButton() {
+        paypal.Buttons({
+            createOrder: function (data, actions) {
+                // Set up the transaction
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '10.00' // Set the amount based on your pricing
+                        }
+                    }]
+                });
+            },
+            onApprove: function (data, actions) {
+                // Capture the funds from the transaction
+                return actions.order.capture().then(function (details) {
+                    // Handle a successful transaction
+                    console.log('Transaction completed by ' + details.payer.name.given_name);
+                    // Send purchase information to the backend
+                    sendPurchaseInfo(details);
+                });
             }
-            to {
-                box-shadow: 0 0 30px #7289da;
-            }
-        }
+        }).render('#paypal-button-container');
+    }
 
-        .server-info {
-            margin-bottom: 20px;
-        }
+    // Function to send purchase information to the backend
+    function sendPurchaseInfo(details) {
+        const rankToBuy = "VIP"; // Change this to the purchased rank
+        const purchaseData = { rankToBuy };
 
-        .server-info p {
-            font-size: 1.2rem;
-        }
+        // Send the purchase data to your backend server
+        fetch('http://localhost:3000/api/purchase', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(purchaseData),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error making purchase. Please try again.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert(data.message); // Show success message
+                } else {
+                    throw new Error(data.message); // Show error message
+                }
+            })
+            .catch(error => {
+                console.error('Error sending purchase data:', error.message);
+                alert('Error making purchase. Please try again.');
+            });
+    }
 
-        #paypal-button-container {
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Welcome to EonVerse Store</h1>
-
-        <div class="rank-container">
-            <!-- VIP Rank -->
-            <div class="rank" data-rank="VIP" data-price="5" data-points="500">
-                <p>VIP - $5</p>
-            </div>
-            <!-- VIP+ Rank -->
-            <div class="rank" data-rank="VIP+" data-price="7" data-points="700">
-                <p>VIP+ - $7</p>
-            </div>
-            <!-- ULTRA Rank -->
-            <div class="rank" data-rank="ULTRA" data-price="10" data-points="1000">
-                <p>ULTRA - $10</p>
-            </div>
-            <!-- LEGEND Rank -->
-            <div class="rank" data-rank="LEGEND" data-price="16" data-points="1600">
-                <p>LEGEND - $16</p>
-            </div>
-        </div>
-
-        <div class="server-info">
-            <p>Server IP: <span class="ip-address">Loading...</span></p>
-            <p>Players Online: <span class="online-count">Loading...</span></p>
-        </div>
-
-        <div id="paypal-button-container"></div>
-    </div>
-
-    <!-- Include PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=ARZxtkO-ZJt4Dn_UNzfdc55JgmcjFEcpY_l8f7mseo2EiqWayxLjXWgnyl8hiQEPoWXMr7lwEiTh997h"></script>
-    <script>
-        // Your JavaScript code here
-    </script>
-</body>
-</html>
+    // Fetch server information when the page loads
+    fetchServerInfo();
+});
