@@ -1,48 +1,38 @@
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", async function () {
-        // Add your Stripe public key here
-        const stripe = Stripe('pk_live_51OsoeKGv8hR1zNKKjJTqAgtXWh1NCDjhuLmRb050lxlxv1maReeBBuXex6QXZU04rQrQZD59rzYIBvF8hqfDRkd800BankfB9l');
+document.addEventListener("DOMContentLoaded", async function () {
+    // Fetch the Stripe public key from the server
+    const response = await fetch('/config');
+    const { publicKey } = await response.json();
+    const stripe = Stripe(publicKey);
 
-        const buyButtons = document.querySelectorAll('.buy-btn');
-        buyButtons.forEach(button => {
-            button.addEventListener('click', handleBuy);
-        });
-
-        async function handleBuy(event) {
-            const rank = event.target.getAttribute('data-rank');
-            const price = parseFloat(event.target.parentNode.getAttribute('data-price'));
+    // Add event listeners to buy buttons
+    document.querySelectorAll('.buy-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            const price = parseInt(button.getAttribute('data-price'));
+            const name = button.getAttribute('data-name');
 
             try {
-                // Create a Checkout Session
-                const session = await fetch('/create-checkout-session', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ rank, price }),
-                }).then(response => response.json());
+                const { sessionId } = await createCheckoutSession(price);
+                const { error } = await stripe.redirectToCheckout({ sessionId });
 
-                // Redirect to Checkout
-                const result = await stripe.redirectToCheckout({
-                    sessionId: session.id,
-                });
-
-                if (result.error) {
-                    console.error('Error redirecting to Checkout:', result.error);
-                    alert('An error occurred. Please try again later.');
+                if (error) {
+                    throw new Error(error.message);
                 }
             } catch (error) {
-                console.error('Error handling purchase:', error);
+                console.error('Error redirecting to checkout:', error);
                 alert('An error occurred. Please try again later.');
             }
-        }
-
-        // Function to fetch server information
-        async function fetchServerInfo() {
-            // Implement logic to fetch server information
-        }
-
-        fetchServerInfo();
+        });
     });
-</script>
+
+    // Function to create a checkout session
+    async function createCheckoutSession(price) {
+        const response = await fetch('/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ price }),
+        });
+        return await response.json();
+    }
+});
