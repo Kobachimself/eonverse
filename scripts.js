@@ -14,8 +14,27 @@ document.addEventListener("DOMContentLoaded", function () {
             // Add event listener for Buy Now button
             const buyNowBtn = document.getElementById("buyNowBtn");
             buyNowBtn.addEventListener("click", function () {
-                // Replace the URL with your actual payment link
-                window.location.href = "https://eonverse.space/store";
+                // Use PayPal Smart Payment Buttons
+                paypal.Buttons({
+                    createOrder: function (data, actions) {
+                        // Set up the transaction
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: '10.00' // Set the amount based on your pricing
+                                }
+                            }]
+                        });
+                    },
+                    onApprove: function (data, actions) {
+                        // Capture the funds from the transaction
+                        return actions.order.capture().then(function (details) {
+                            // Handle a successful transaction
+                            console.log('Transaction completed by ' + details.payer.name.given_name);
+                            // You can add logic here to notify the server about the successful payment
+                        });
+                    }
+                }).render('#paypal-button-container');
             });
         })
         .catch(error => {
