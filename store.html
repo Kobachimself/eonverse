@@ -1,127 +1,60 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="dark">
+<html lang="en" dir="ltr">
 <head>
-    <title>EonVerse Offical Site &bull; Home</title>
-    <meta name="title" content="EonVerse Offical Site &bull; Home">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EonVerse Store</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <!-- Stripe.js script -->
-    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .store-container {
+            text-align: center;
+        }
+        .rank {
+            margin-bottom: 20px;
+        }
+        .rank img {
+            width: 100px;
+            height: 100px;
+        }
+        .price {
+            font-size: 18px;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container top-container">
-        <div class="row">
-            <div class="col-lg-9">
-                <div class="card mb-2 welcome-card">
-                    <div class="card-body">
-                        <div class="welcome-card-flex">
-                            <div class="welcome-av-col">
-                            </div>
-                            <div class="welcome-text-col">
-                                <span class="welcome-text-col">Welcome to EonVerse!</span><br>
-                                <span class="welcome-text">Greetings! Welcome to the official EonVerse website where you can find info on the server. Can't vote? No problem, just head over to the vote page and use the links. Want to buy an item? Head over to our Shop with over 25+ items for you to browse through!</span><br>
-                                <div class="full-post-info ml-3 flex-grow-1 mr-3">
-                                    <div class="full-post-author">Mariell Berntzen</div>
-                                    <div>7 July 23th, 2022</div>
-                                </div>
-                                <div class="readtime">1 minute read</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <a href="store.html/" target="_blank">
-                    <div class="store-box mb-2">
-                        <div class="store-title">Store</div>
-                        <div class="store-icon"><i class="fas fa-shopping-basket"></i></div>
-                        <div class="store-subtitle">Shop Now!</div>
-                    </div>
-                </a>
-            </div>
+    <div class="store-container">
+        <h1>Welcome to EonVerse Store</h1>
+        <div class="rank">
+            <img src="https://media.discordapp.net/attachments/1199074761427398757/1216287885972734024/85e4291df1ef6550b2738ae3a911ea34b81d203c.png?ex=65ffd75d&is=65ed625d&hm=9e24bbab1f499c145015a15e38f3347fb9a335067b721cf41bb89a63202d4cc4&=&format=webp&quality=lossless" alt="VIP Rank">
+            <h2>VIP Rank</h2>
+            <p class="price">$5 (500 Points)</p>
+            <button>Add to Cart</button>
         </div>
-        <div class="alert alert-danger" id="ie-message">
-            IE not supported
+        <div class="rank">
+            <img src="https://media.discordapp.net/attachments/1199074761427398757/1216117479244304394/311b56d678180c9fbf2f6e00e58b469423b32e01.png?ex=65ff38a9&is=65ecc3a9&hm=e3bcdfbbed9512561647a8c2307bf4f7d876c375bdd05907caec77012d35150c&=&format=webp&quality=lossless" alt="ULTRA Rank">
+            <h2>ULTRA Rank</h2>
+            <p class="price">$10 (1000 Points)</p>
+            <button>Add to Cart</button>
         </div>
-        <div class="chatbox mb-3" id="chatbox-top"></div>
+        <div class="rank">
+            <img src="https://cdn.discordapp.com/attachments/1199074761427398757/1216117431487955036/955efa55805a5e8003f1082597e17af0aef53ec5_1.png?ex=65ff389e&is=65ecc39e&hm=cb2ae0d620018884cdd91fd24cf71199ff27f85c18361c2132ba23eb2cf40f9f&" alt="VIP+ Rank">
+            <h2>VIP+ Rank</h2>
+            <p class="price">$7 (700 Points)</p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="rank">
+            <img src="https://media.discordapp.net/attachments/1199074761427398757/1216117479500152852/e917c9e48ebf74e9761a6465be02b2051778514c.png?ex=65ff38a9&is=65ecc3a9&hm=c06b49236168b761086293813dd8a89160b7a5426bc1ed059cd5f919940eec2e&=&format=webp&quality=lossless" alt="Legend Rank">
+            <h2>Legend Rank</h2>
+            <p class="price">$16 (1600 Points)</p>
+            <button>Add to Cart</button>
+        </div>
     </div>
-    <footer class="site-footer-dark">
-        <div class="container">
-            <div class="footer-box">
-                <div class="footer-text">Join our Discord!</div>
-                <a href="https://discord.gg/RZ5rGr35Yr" target="_blank">
-                    <div class="discord-icon">
-                        <svg class="discord" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 245 240">
-                            <path class="st0" d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zM140.9 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z">
-                            </path>
-                            <path class="st0" d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.7 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.4 1.3-25.9-.1-5.7-1.1-10.6-2.7-14.7-4.3-2.3-.9-4.8-2-7.3-3.4-.3-.2-.6-.3-.9-.5-.2-.1-.3-.2-.4-.3-1.8-1-2.8-1.7-2.8-1.7s4.8 8 17.5 11.8c-3 3.8-6.7 8.3-6.7 8.3-22.1-.7-30.5-15.2-30.5-15.2 0-32.2 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.2-1.2 5.9-2.9c10.7-4.7 19.2-6 22.7-6.3.6-.1 1.1-.2 1.7-.2 6.1-.8 13-1 20.2-.2 9.5 1.1 19.7 3.9 30.1 9.6 0 0-7.9-7.5-24.9-12.7l1.4-1.6s13.7-.3 28.1 10.5c0 0 14.4 26.1 14.4 58.3 0 0-8.5 14.5-30.6 15.2z">
-                            </path>
-                        </svg>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="footer-text">© 2024 EonVerse Minecraft Server | All Rights Reserved.</div>
-    </footer>
-
-    <!-- Your existing JavaScript files -->
-    <script src="js/index.js"></script>
-    <script src="js/chatbox.js"></script>
-
-    <!-- Stripe.js integration -->
-    <script>
-        // Set your publishable key
-        var stripe = Stripe('pk_live_51OsoeKGv8hR1zNKKjJTqAgtXWh1NCDjhuLmRb050lxlxv1maReeBBuXex6QXZU04rQrQZD59rzYIBvF8hqfDRkd800BankfB9l');
-
-        // Create an instance of elements
-        var elements = stripe.elements();
-
-        // Custom styling can be passed to options when creating an Element.
-        var style = {
-          base: {
-            // Add your base styles here
-          }
-        };
-
-        // Create an instance of the card Element
-        var card = elements.create('card', {style: style});
-
-        // Add an instance of the card Element into the `card-element` div
-        card.mount('#card-element');
-
-        // Handle form submission
-        var form = document.getElementById('payment-form');
-        form.addEventListener('submit', function(event) {
-          event.preventDefault();
-
-          stripe.createToken(card).then(function(result) {
-            if (result.error) {
-              // Inform the user if there was an error
-              var errorElement = document.getElementById('card-errors');
-              errorElement.textContent = result.error.message;
-            } else {
-              // Send the token to your server
-              stripeTokenHandler(result.token);
-            }
-          });
-        });
-
-        // Submit the form with the token ID
-        function stripeTokenHandler(token) {
-          // Insert the token ID into the form so it gets submitted to the server
-          var form = document.getElementById('payment-form');
-          var hiddenInput = document.createElement('input');
-          hiddenInput.setAttribute('type', 'hidden');
-          hiddenInput.setAttribute('name', 'stripeToken');
-          hiddenInput.setAttribute('value', token.id);
-          form.appendChild(hiddenInput);
-
-          // Submit the form
-          form.submit();
-        }
-    </script>
 </body>
 </html>
