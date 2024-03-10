@@ -99,6 +99,27 @@ document.addEventListener("DOMContentLoaded", function () {
             discordUsername: discordUsernameInput.value,
             minecraftUsername: minecraftUsernameInput.value
         };
+         // Function to enable Buy button functionality
+    function enableBuyButtons() {
+        const buyButtons = document.querySelectorAll('.buy-btn');
+        buyButtons.forEach(button => {
+            button.addEventListener('click', handleBuy);
+        });
+    }
+
+    // Function to handle Buy button click
+    function handleBuy(event) {
+        const rank = event.target.getAttribute('data-rank');
+        const price = parseFloat(event.target.parentNode.getAttribute('data-price'));
+
+        // Redirect to payment page or perform other actions as needed
+        // Here, you can open a payment modal or redirect to a payment gateway
+        alert(`You clicked Buy for ${rank} rank. Price: $${price}`);
+    }
+
+    // Fetch server information when the page loads
+    fetchServerInfo();
+});
 
         fetch('/api/purchase', {
             method: 'POST',
