@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Handle a successful transaction
                     console.log('Transaction completed by ' + details.payer.name.given_name);
                     // Send purchase information to the backend
+                    showPopup();
                     sendPurchaseInfo(details);
                 });
             }
@@ -68,13 +69,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 throw new Error('Error sending purchase data to the server');
             }
             // Handle successful response from the server
-            alert('Purchase successful!');
         })
         .catch(error => {
             console.error('Error sending purchase data:', error);
-            alert('Error making purchase. Please try again.');
         });
     }
+
+    // Show popup form
+    function showPopup() {
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+        overlay.classList.add('active');
+        popup.classList.add('active');
+    }
+
+    // Hide popup form
+    function hidePopup() {
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+        overlay.classList.remove('active');
+        popup.classList.remove('active');
+    }
+
+    // Event listener for submit form button
+    document.getElementById('details-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const discordUsername = document.getElementById('discord-username').value;
+        const minecraftUsername = document.getElementById('minecraft-username').value;
+        // You can handle form submission here, send data to the server, etc.
+        console.log('Discord Username:', discordUsername);
+        console.log('Minecraft Username:', minecraftUsername);
+        hidePopup();
+    });
 
     // Fetch server information when the page loads
     fetchServerInfo();
