@@ -1,9 +1,7 @@
-// paymentConfirmation.js
-
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const channelId = '1216095276834492548'; // Replace with your actual channel ID
-const botToken = process.env.BOT_TOKEN; // Replace with your actual bot token
+const botToken = 'MTIxNjMxMzcwMDIyMzQxODQyOA.GTbXk_.l4NezhZ-a81Fs_RN6ZEsZ1pAGaNTeL8PAR-l2k'; // Replace with your actual bot token
 
 client.once('ready', () => {
     // Handle ready event if needed
