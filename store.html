@@ -5,7 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EonVerse Store</title>
     <style>
-        /* Your CSS styles here */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #28a745; /* Green */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .ranks {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .rank {
+            margin: 20px;
+            background-color: #2b2b2b; /* Dark Gray */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .rank:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .rank img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .rank h2 {
+            margin-bottom: 10px;
+        }
+
+        .price {
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #28a745; /* Green */
+        }
+
+        .buy-btn {
+            background-color: #28a745; /* Green */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .buy-btn:hover {
+            background-color: #218838; /* Darker Green */
+        }
+
+        .eonverse-info {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #2b2b2b; /* Dark Gray */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .read-info {
+            border: 2px solid #28a745; /* Green */
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -36,6 +123,14 @@
                 <p class="price">$16 (1600 Points)</p>
                 <a href="https://buy.stripe.com/7sI9Dfbuv4mo6ruaEE" class="buy-btn">Buy</a>
             </div>
+        </div>
+
+        <div class="eonverse-info">
+            <p>Welcome to EonVerse!<br>
+            Greetings! Welcome to the official EonVerse store where you can find a variety of ranks and items to enhance your experience on the server. Can't vote? No problem, just head over to the vote page and use the links. Want to buy an item? Head over to our shop with over 25+ items for you to browse through!</p>
+            <div class="read-info">Mariell Berntzen<br>
+            7 July 23th, 2022<br>
+            <span style="color: #28a745;">1 minute read</span></div>
         </div>
     </div>
 </body>
