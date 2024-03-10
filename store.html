@@ -80,18 +80,44 @@
             background-color: #218838; /* Darker Green */
         }
 
-        .eonverse-info {
+        .eonverse-info-container {
             margin-top: 50px;
             padding: 20px;
             background-color: #2b2b2b; /* Dark Gray */
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px #28a745; /* Green */
+            }
+            100% {
+                box-shadow: 0 0 20px #28a745; /* Green */
+            }
+        }
+
+        .eonverse-info {
+            padding: 20px;
         }
 
         .read-info {
             border: 2px solid #28a745; /* Green */
             padding: 10px;
             border-radius: 5px;
+            color: #28a745; /* Green */
+            text-align: center;
+            animation: glow-border 1.5s infinite alternate;
+        }
+
+        @keyframes glow-border {
+            0% {
+                border-color: #28a745; /* Green */
+            }
+            100% {
+                border-color: #218838; /* Darker Green */
+            }
         }
     </style>
 </head>
@@ -125,9 +151,11 @@
             </div>
         </div>
 
-        <div class="eonverse-info">
-            <p>Welcome to EonVerse!<br>
-            Greetings! Welcome to the official EonVerse store where you can find a variety of ranks and items to enhance your experience on the server. Can't vote? No problem, just head over to the vote page and use the links. Want to buy an item? Head over to our shop with over 25+ items for you to browse through!</p>
+        <div class="eonverse-info-container">
+            <div class="eonverse-info">
+                <p>Welcome to EonVerse!<br>
+                Greetings! Welcome to the official EonVerse store where you can find a variety of ranks and items to enhance your experience on the server. Can't vote? No problem, just head over to the vote page and use the links. Want to buy an item? Head over to our shop with over 25+ items for you to browse through!</p>
+            </div>
             <div class="read-info">Mariell Berntzen<br>
             7 July 23th, 2022<br>
             <span style="color: #28a745;">1 minute read</span></div>
