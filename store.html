@@ -144,6 +144,7 @@
         <label for="discordUsername">Discord Username:</label>
         <input type="text" id="discordUsername" placeholder="Enter your Discord Username">
 
+        <!-- Button to initiate payment confirmation -->
         <button class="buy-now" onclick="processPayment()">Continue</button>
     </div>
 
@@ -151,6 +152,7 @@
 
     <!-- Include PayPal SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=ARZxtkO-ZJt4Dn_UNzfdc55JgmcjFEcpY_l8f7mseo2EiqWayxLjXWgnyl8hiQEPoWXMr7lwEiTh997h&currency=USD"></script>
+    <script src="your-script.js"></script>
     <script>
         function initiatePayment(rank) {
             // Get Minecraft and Discord usernames from the form
@@ -158,7 +160,7 @@
             const discordUsername = document.getElementById('discordUsername').value;
 
             // Call the backend API to initiate the payment
-            fetch('/initiatePayment', {
+            fetch('/.netlify/functions/paymentConfirmation', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -171,8 +173,8 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Redirect to the PayPal login page
-                window.location.href = data.redirectUrl;
+                // Redirect to the PayPal login page or handle response accordingly
+                console.log(data);
             })
             .catch(error => {
                 console.error('Error initiating payment:', error);
@@ -187,7 +189,7 @@
             const discordUsername = document.getElementById('discordUsername').value;
 
             // Call the backend API to process the payment confirmation
-            fetch('/paymentConfirmation', {
+            fetch('/.netlify/functions/paymentConfirmation', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
