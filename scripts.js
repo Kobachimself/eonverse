@@ -14,41 +14,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const purchaseRankInput = document.getElementById('purchase-rank');
     const purchaseAmountInput = document.getElementById('purchase-amount');
 
-    const buyButtons = document.querySelectorAll('.buy-btn');
+     const buyButtons = document.querySelectorAll('.buy-btn');
+
     buyButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const rank = this.dataset.rank;
-            const price = ranks[rank].price;
-            const description = ranks[rank].description;
-
-            purchaseRankInput.value = rank;
-            purchaseAmountInput.value = price;
-
-            overlay.classList.add('active');
-            popup.innerHTML = `
-                <h2>Enter Your Details</h2>
-                <p>${description}</p>
-                <form id="details-form">
-                    <label for="discord-username">Discord Username:</label>
-                    <input type="text" id="discord-username" name="discord-username" required>
-                    <label for="minecraft-username">Minecraft Username (IGN):</label>
-                    <input type="text" id="minecraft-username" name="minecraft-username" required>
-                    <button type="submit">Submit</button>
-                </form>
-            `;
-
-            discordUsernameInput = document.getElementById('discord-username');
-            minecraftUsernameInput = document.getElementById('minecraft-username');
-
-            overlay.addEventListener('click', function () {
-                overlay.classList.remove('active');
-            });
-
-            popup.addEventListener('click', function (event) {
-                event.stopPropagation();
-            });
+        button.addEventListener('click', function() {
+            const rank = this.dataset.rank; // Get the rank associated with the button
+            // Redirect to the payment site based on the rank
+            if (rank === 'VIP') {
+                window.location.href = 'https://example.com/payment/vip';
+            } else if (rank === 'VIP+') {
+                window.location.href = 'https://example.com/payment/vip-plus';
+            } else if (rank === 'ULTRA') {
+                window.location.href = 'https://example.com/payment/ultra';
+            } else if (rank === 'LEGEND') {
+                window.location.href = 'https://example.com/payment/legend';
+            }
         });
     });
+});
 
     detailsForm.addEventListener('submit', function (event) {
         event.preventDefault();
