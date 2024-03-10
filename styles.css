@@ -1,12 +1,14 @@
-/* Your CSS styles here */
 body {
     font-family: Arial, sans-serif;
-    background-color: #222;
-    color: #00ff00;
+    background-color: #2c2f33;
+    color: #fff;
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
+    margin-top: 50px;
     color: #00ff00;
     text-shadow: 2px 2px #000;
 }
@@ -22,12 +24,18 @@ h1 {
     padding: 20px;
     background-color: #333;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 255, 0, 0.2);
+    box-shadow: 0 0 20px #00ff00;
+    transition: transform 0.3s ease-in-out;
+}
+
+.rank:hover {
+    transform: translateY(-5px);
 }
 
 .rank p {
     margin: 0;
     color: #00ff00;
+    font-size: 18px;
 }
 
 .buy-btn {
@@ -37,7 +45,7 @@ h1 {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .buy-btn:hover {
