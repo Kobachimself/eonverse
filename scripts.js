@@ -1,63 +1,123 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Function to fetch server information
-    function fetchServerInfo() {
-        const ip = "eonverse.club"; // Your server's IP
+    const ranks = {
+        'VIP': { price: 5, description: 'Access to VIP features' },
+        'VIP+': { price: 7, description: 'Access to all VIP features and VIP+' },
+        'ULTRA': { price: 10, description: 'Access to VIP+ and all ULTRA features' },
+        'LEGEND': { price: 16, description: 'Access to ALL features and LEGEND Features' }
+    };
 
-        fetch(`https://api.mcsrvstat.us/2/${ip}`)
-            .then(response => response.json())
-            .then(data => {
-                const onlineCount = data.players ? data.players.online || 0 : 0;
-                const ipElement = document.querySelector(".ip-address");
-                const onlineCountElement = document.querySelector(".online-count");
+    const overlay = document.getElementById('overlay');
+    const popup = document.getElementById('popup');
+    const detailsForm = document.getElementById('details-form');
+    const discordUsernameInput = document.getElementById('discord-username');
+    const minecraftUsernameInput = document.getElementById('minecraft-username');
+    const purchaseRankInput = document.getElementById('purchase-rank');
+    const purchaseAmountInput = document.getElementById('purchase-amount');
 
-                ipElement.textContent = ip;
-                onlineCountElement.textContent = onlineCount;
+    const buyButtons = document.querySelectorAll('.buy-btn');
+    buyButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const rank = this.dataset.rank;
+            const price = ranks[rank].price;
+            const description = ranks[rank].description;
 
-                renderPayPalButton();
-            })
-            .catch(error => {
-                console.error("Error fetching server information:", error);
-                renderPayPalButton();
+            purchaseRankInput.value = rank;
+            purchaseAmountInput.value = price;
+
+            overlay.classList.add('active');
+            popup.innerHTML = `
+                <h2>Enter Your Details</h2>
+                <p>${description}</p>
+                <form id="details-form">
+                    <label for="discord-username">Discord Username:</label>
+                    <input type="text" id="discord-username" name="discord-username" required>
+                    <label for="minecraft-username">Minecraft Username (IGN):</label>
+                    <input type="text" id="minecraft-username" name="minecraft-username" required>
+                    <button type="submit">Submit</button>
+                </form>
+            `;
+
+            discordUsernameInput = document.getElementById('discord-username');
+            minecraftUsernameInput = document.getElementById('minecraft-username');
+
+            overlay.addEventListener('click', function () {
+                overlay.classList.remove('active');
             });
-    }
 
-    // Function to render PayPal Smart Payment Buttons
-    function renderPayPalButton() {
-        paypal.Buttons({
-            createOrder: function (data, actions) {
-                // Set up the transaction
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '10.00' // Set the amount based on your pricing
-                        }
-                    }]
-                });
+            popup.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
+    });
+
+    detailsForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const discordUsername = discordUsernameInput.value;
+        const minecraftUsername = minecraftUsernameInput.value;
+        const rank = purchaseRankInput.value;
+        const amount = purchaseAmountInput.value;
+
+        const purchaseData = {
+            discordUsername,
+            minecraftUsername,
+            rank,
+            amount
+        };
+
+        fetch('/api/purchase', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
             },
-            onApprove: function (data, actions) {
-                // Capture the funds from the transaction
-                return actions.order.capture().then(function (details) {
-                    // Handle a successful transaction
-                    console.log('Transaction completed by ' + details.payer.name.given_name);
-                    // Send purchase information to the backend
-                    showPopup();
-                    sendPurchaseInfo(details);
-                });
+            body: JSON.stringify(purchaseData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error making purchase');
             }
-        }).render('#paypal-button-container');
-    }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.message);
+            alert('Purchase successful!'); // You can customize this part later
+            overlay.classList.remove('active');
+        })
+        .catch(error => {
+            console.error('Error making purchase:', error);
+            alert('Error making purchase. Please try again.');
+        });
+    });
+
+    // Load PayPal buttons
+    paypal.Buttons({
+        createOrder: function (data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: purchaseAmountInput.value
+                    }
+                }]
+            });
+        },
+        onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+                console.log('Transaction completed by ' + details.payer.name.given_name);
+                sendPurchaseInfo(details);
+            });
+        }
+    }).render('#paypal-button-container');
 
     // Function to send purchase information to the backend
     function sendPurchaseInfo(details) {
         const purchaseData = {
-            rank: 'VIP', // Change this to the purchased rank
+            rank: purchaseRankInput.value,
             amount: details.purchase_units[0].amount.value,
-            payer: details.payer.name.given_name,
-            // Add any other relevant data you want to send
+            discordUsername: discordUsernameInput.value,
+            minecraftUsername: minecraftUsernameInput.value
         };
 
-        // Send the purchase data to your backend server
-        fetch('http://localhost:3000/api/purchase', {
+        fetch('/api/purchase', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -69,39 +129,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 throw new Error('Error sending purchase data to the server');
             }
             // Handle successful response from the server
+            alert('Purchase successful!');
+            overlay.classList.remove('active');
         })
         .catch(error => {
             console.error('Error sending purchase data:', error);
+            alert('Error making purchase. Please try again.');
         });
     }
-
-    // Show popup form
-    function showPopup() {
-        const overlay = document.getElementById('overlay');
-        const popup = document.getElementById('popup');
-        overlay.classList.add('active');
-        popup.classList.add('active');
-    }
-
-    // Hide popup form
-    function hidePopup() {
-        const overlay = document.getElementById('overlay');
-        const popup = document.getElementById('popup');
-        overlay.classList.remove('active');
-        popup.classList.remove('active');
-    }
-
-    // Event listener for submit form button
-    document.getElementById('details-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const discordUsername = document.getElementById('discord-username').value;
-        const minecraftUsername = document.getElementById('minecraft-username').value;
-        // You can handle form submission here, send data to the server, etc.
-        console.log('Discord Username:', discordUsername);
-        console.log('Minecraft Username:', minecraftUsername);
-        hidePopup();
-    });
-
-    // Fetch server information when the page loads
-    fetchServerInfo();
 });
