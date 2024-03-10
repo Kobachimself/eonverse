@@ -11,22 +11,22 @@
 
     <div class="rank-container">
         <!-- VIP Rank -->
-        <div class="rank" data-rank="VIP" data-price="5" data-description="Access to VIP features">
+        <div class="rank" data-rank="VIP" data-price="5">
             <p>VIP - $5</p>
             <button class="buy-btn" data-rank="VIP">Buy</button>
         </div>
         <!-- VIP+ Rank -->
-        <div class="rank" data-rank="VIP+" data-price="7" data-description="Access to all VIP features and VIP+">
+        <div class="rank" data-rank="VIP+" data-price="7">
             <p>VIP+ - $7</p>
             <button class="buy-btn" data-rank="VIP+">Buy</button>
         </div>
         <!-- ULTRA Rank -->
-        <div class="rank" data-rank="ULTRA" data-price="10" data-description="Access to VIP+ and all ULTRA features">
+        <div class="rank" data-rank="ULTRA" data-price="10">
             <p>ULTRA - $10</p>
             <button class="buy-btn" data-rank="ULTRA">Buy</button>
         </div>
         <!-- LEGEND Rank -->
-        <div class="rank" data-rank="LEGEND" data-price="16" data-description="Access to ALL features and LEGEND Features">
+        <div class="rank" data-rank="LEGEND" data-price="16">
             <p>LEGEND - $16</p>
             <button class="buy-btn" data-rank="LEGEND">Buy</button>
         </div>
@@ -40,6 +40,8 @@
                 <input type="text" id="discord-username" name="discord-username" required>
                 <label for="minecraft-username">Minecraft Username (IGN):</label>
                 <input type="text" id="minecraft-username" name="minecraft-username" required>
+                <input type="hidden" id="purchase-rank" name="purchase-rank">
+                <input type="hidden" id="purchase-amount" name="purchase-amount">
                 <button type="submit">Submit</button>
             </form>
         </div>
