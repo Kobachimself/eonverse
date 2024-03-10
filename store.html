@@ -1,71 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EonVerse Store</title>
-  <!-- Add your stylesheets, scripts, and other meta tags as needed -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Server Store</title>
 </head>
 <body>
-  <h1>Welcome to the EonVerse Store!</h1>
-  <p>Choose a payment method:</p>
-  <button onclick="payWithPayPal()">Pay with PayPal</button>
-  
-  <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID"></script>
-  <script>
-    // Replace 'YOUR_PAYPAL_CLIENT_ID' with your actual PayPal client ID
+    <h1>Welcome to Your Server Store</h1>
+    <p>Server IP: <span class="ip-address"></span></p>
+    <p>Online Players: <span class="online-count"></span></p>
 
-    function payWithPayPal(rank) {
-    paypal.Buttons({
-      createOrder: function(data, actions) {
-        // Set up the transaction details based on the selected rank
-        let amount, rankName;
+    <!-- Add Buy Now buttons for each rank -->
+    <button class="buyNowBtn" data-rank="VIP">Buy VIP</button>
+    <button class="buyNowBtn" data-rank="VIP+">Buy VIP+</button>
+    <button class="buyNowBtn" data-rank="ULTRA">Buy ULTRA</button>
+    <button class="buyNowBtn" data-rank="LEGEND">Buy LEGEND</button>
+    <button class="buyNowBtn" data-rank="SPECIAL_RANK">Buy SPECIAL_RANK</button>
 
-        switch (rank) {
-          case 'VIP':
-            amount = '5.00';
-            rankName = 'VIP';
-            break;
-          case 'VIP+':
-            amount = '7.00';
-            rankName = 'VIP+';
-            break;
-          case 'ULTRA':
-            amount = '10.00';
-            rankName = 'ULTRA';
-            break;
-          case 'LEGEND':
-            amount = '16.00';
-            rankName = 'LEGEND';
-            break;
-          case 'SPECIAL_RANK':
-            amount = '20.00'; // Adjust the amount for the special rank
-            rankName = 'SPECIAL_RANK';
-            break;
-          default:
-            // Handle the default case or provide an error message
-            alert('Invalid rank selected');
-            return;
-        }
+    <!-- Include PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const ip = "eonverse.club"; // Your server's IP
 
-        return actions.order.create({
-          purchase_units: [{
-            amount: {
-              value: amount,
-              currency_code: 'USD'
-            },
-            description: `Purchase of ${rankName} rank` // Add a description if needed
-          }]
+            fetch(`https://api.mcsrvstat.us/2/${ip}`)
+                .then(response => response.json())
+                .then(data => {
+                    const onlineCount = data.players.online || 0;
+                    const ipElement = document.querySelector(".ip-address");
+                    const onlineCountElement = document.querySelector(".online-count");
+
+                    ipElement.textContent = ip;
+                    onlineCountElement.textContent = onlineCount;
+
+                    // Add event listener for Buy Now buttons
+                    const buyNowButtons = document.querySelectorAll(".buyNowBtn");
+                    buyNowButtons.forEach(button => {
+                        button.addEventListener("click", function () {
+                            const rank = this.getAttribute("data-rank");
+                            payWithPayPal(rank);
+                        });
+                    });
+
+                    function payWithPayPal(rank) {
+                        paypal.Buttons({
+                            createOrder: function (data, actions) {
+                                // Set up the transaction details based on the selected rank
+                                let amount;
+
+                                switch (rank) {
+                                    case 'VIP':
+                                        amount = '5.00';
+                                        break;
+                                    case 'VIP+':
+                                        amount = '7.00';
+                                        break;
+                                    case 'ULTRA':
+                                        amount = '10.00';
+                                        break;
+                                    case 'LEGEND':
+                                        amount = '16.00';
+                                        break;
+                                    case 'SPECIAL_RANK':
+                                        amount = '20.00';
+                                        break;
+                                    default:
+                                        alert('Invalid rank selected');
+                                        return;
+                                }
+
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: amount,
+                                            currency_code: 'USD'
+                                        },
+                                        description: `Purchase of ${rank} rank`
+                                    }]
+                                });
+                            },
+                            onApprove: function (data, actions) {
+                                return actions.order.capture().then(function (details) {
+                                    console.log('Transaction completed by ' + details.payer.name.given_name);
+                                    // You can add logic here to notify the server about the successful payment
+                                });
+                            }
+                        }).render('#paypal-button-container');
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching server information:", error);
+                });
         });
-      },
-        onError: function(err) {
-          // Handle errors during the transaction
-          console.error(err);
-          alert('An error occurred. Please try again.');
-        }
-      }).render('#paypal-button-container'); // Replace with the ID of the container element
-    }
-  </script>
-  <div id="paypal-button-container"></div>
+    </script>
+    <div id="paypal-button-container"></div>
 </body>
 </html>
