@@ -152,6 +152,33 @@
     <!-- Include PayPal SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=ARZxtkO-ZJt4Dn_UNzfdc55JgmcjFEcpY_l8f7mseo2EiqWayxLjXWgnyl8hiQEPoWXMr7lwEiTh997h&currency=USD"></script>
     <script src="your-script.js"></script>
+    <script>
+    function initiatePayment(rank) {
+        // ...
+
+        fetch('/initiatePayment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                rank,
+                minecraftUsername,
+                discordUsername,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            window.location.href = data.redirectUrl;
+        })
+        .catch(error => {
+            console.error('Error initiating payment:', error);
+            alert('Error initiating payment. Please try again later.');
+        });
+    }
+
+    // ...
+</script>
 
     <!-- Your existing scripts here -->
 
