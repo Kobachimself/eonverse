@@ -7,7 +7,88 @@
 
     <!-- Add your stylesheets and other meta tags as needed -->
     <style>
-        /* Add your CSS styles here */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #0f0; /* Green color */
+        }
+
+        /* Container for rank boxes */
+        .rank-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-out; /* Fade in animation */
+        }
+
+        /* Individual rank box */
+        .rank {
+            background-color: #090; /* Dark green */
+            border: 2px solid #0f0; /* Green border */
+            border-radius: 10px;
+            padding: 20px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 0 10px #0f0; /* Green glow */
+            transition: box-shadow 0.3s;
+            cursor: pointer;
+            animation: slideIn 1s ease-out; /* Slide in animation */
+        }
+
+        .rank img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .rank p {
+            margin: 0;
+            color: #fff;
+        }
+
+        .rank:hover {
+            box-shadow: 0 0 20px #0f0, 0 0 40px #0f0, 0 0 60px #0f0; /* Increase glow on hover */
+        }
+
+        .buy-now {
+            background-color: #0f0; /* Green button */
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .buy-now:hover {
+            background-color: #090; /* Dark green on hover */
+        }
+
+        /* Animation keyframes */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -44,7 +125,7 @@
     </div>
 
     <!-- Include PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id="ARZxtkO-ZJt4Dn_UNzfdc55JgmcjFEcpY_l8f7mseo2EiqWayxLjXWgnyl8hiQEPoWXMr7lwEiTh997h"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=ARZxtkO-ZJt4Dn_UNzfdc55JgmcjFEcpY_l8f7mseo2EiqWayxLjXWgnyl8hiQEPoWXMr7lwEiTh997h"></script>
     <script src="your-script.js"></script>
 </body>
 </html>
