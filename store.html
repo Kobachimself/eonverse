@@ -11,17 +11,26 @@
             background-color: #000;
             color: #fff;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
 
         h1 {
             color: #0f0; /* Green color */
+            margin-bottom: 20px;
         }
 
         /* Container for rank boxes */
         .rank-container {
             display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
             animation: fadeIn 1s ease-out; /* Fade in animation */
         }
 
@@ -48,6 +57,7 @@
         .rank p {
             margin: 0;
             color: #fff;
+            font-size: 14px;
         }
 
         .rank:hover {
