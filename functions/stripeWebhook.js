@@ -15,7 +15,7 @@ async function handleStripeWebhook(req, res) {
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(req.rawBody, sig, 'your_stripe_webhook_secret');
+    event = stripe.webhooks.constructEvent(req.rawBody, sig, 'whsec_oGctvojR4zFNMsq3Pv06LemflNhjT0Nr');
   } catch (err) {
     console.error('Webhook Error:', err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
