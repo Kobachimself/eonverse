@@ -11,6 +11,15 @@ document.addEventListener("DOMContentLoaded", async function () {
             const name = button.getAttribute('data-name');
 
             try {
+                // Check if the user is logged in
+                const isLoggedIn = await checkLoginStatus();
+                if (!isLoggedIn) {
+                    // Redirect to login page if not logged in
+                    window.location.href = '/login.html';
+                    return;
+                }
+
+                // Proceed with checkout if user is logged in
                 const { sessionId } = await createCheckoutSession(price);
                 const { error } = await stripe.redirectToCheckout({ sessionId });
 
@@ -34,5 +43,17 @@ document.addEventListener("DOMContentLoaded", async function () {
             body: JSON.stringify({ price }),
         });
         return await response.json();
+    }
+
+    // Function to check login status
+    async function checkLoginStatus() {
+        try {
+            const response = await fetch('/check-login-status');
+            const { loggedIn } = await response.json();
+            return loggedIn;
+        } catch (error) {
+            console.error('Error checking login status:', error);
+            return false;
+        }
     }
 });
