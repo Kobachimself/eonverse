@@ -20,7 +20,7 @@ exports.handler = async (event, context) => {
     connection.connect();
 
     // Execute a query to check if the user exists
-    const [rows, fields] = await connection.promise().query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password]);
+    const [rows, fields] = await connection.promise().query('SELECT * FROM users WHERE username = ? AND discord username = ?', [username, discord username]);
 
     // Close the connection
     connection.end();
@@ -36,7 +36,7 @@ exports.handler = async (event, context) => {
       // User not found, return error response
       return {
         statusCode: 401,
-        body: JSON.stringify({ error: 'Invalid username or password' })
+        body: JSON.stringify({ error: 'Invalid username or Discord username' })
       };
     }
   } catch (error) {
