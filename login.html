@@ -92,42 +92,39 @@
     </div>
 
     <script>
-       document.addEventListener("DOMContentLoaded", async function () {
-    document.getElementById('loginForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
+        document.addEventListener("DOMContentLoaded", async function () {
+            document.getElementById('loginForm').addEventListener('submit', async function(event) {
+                event.preventDefault();
 
-        const formData = new FormData(this);
-        const username = formData.get('username');
-        const discordUsername = formData.get('discord_username');
+                const formData = new FormData(this);
+                const username = formData.get('username');
+                const discordUsername = formData.get('discord_username');
 
-        try {
-            const response = await fetch('/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, discordUsername })
+                try {
+                    const response = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username, discordUsername })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to login');
+                    }
+
+                    const data = await response.json();
+                    console.log('Login successful:', data);
+
+                    // Redirect to store.html after successful login
+                    window.location.href = '/store.html';
+                } catch (error) {
+                    console.error('Login failed:', error.message);
+                }
             });
-
-            if (!response.ok) {
-                throw new Error('Failed to login');
-            }
-
-            const data = await response.json();
-            console.log('Login successful:', data);
-            window.location.href = '/store.html'; // Redirect to store page after successful login
-        } catch (error) {
-            console.error('Login failed:', error.message);
-        }
-    });
-    
-    // Add event listener to login button
-    document.getElementById('loginBtn').addEventListener('click', function(event) {
-        event.preventDefault();
-        document.getElementById('loginForm').submit(); // Submit the form when login button is clicked
-    });
-});
-
+        });
     </script>
+</body>
+</html>
 </body>
 </html>
