@@ -3,17 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EonVerse Login</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Login</title>
 </head>
 <body>
+    <h1>Login</h1>
     <div class="container">
-        <h1>EonVerse Login</h1>
         <form id="loginForm">
             <label for="username">Minecraft Username:</label>
             <input type="text" id="username" name="username" required>
             <button type="submit">Login</button>
         </form>
+        <p>Don't have an account? <a href="register.html">Register here</a></p>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username })
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    // Assuming you want to store the token in localStorage
+                    localStorage.setItem('token', data.token);
+                    // Redirect to the store or dashboard page after successful login
+                    window.location.href = '/store';
+                } else {
+                    console.error('Login failed:', response.statusText);
+                    alert('Login failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+    </script>
 </body>
 </html>
