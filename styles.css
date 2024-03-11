@@ -1,4 +1,26 @@
 /* style.css */
+/* Add this CSS for the accordion */
+.accordion-content {
+    display: none;
+    padding: 10px;
+}
+
+.accordion-item {
+    cursor: pointer;
+    background-color: #2b2b2b;
+    color: #fff;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.accordion-item:hover {
+    background-color: #218838; /* Darker Green */
+}
+
+.active {
+    display: block;
+}
 
 /* Common styles for all pages */
 body {
