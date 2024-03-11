@@ -1,4 +1,4 @@
-const stripe = require('stripe')('your_stripe_secret_key');
+const stripe = require('stripe')('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');
 const mysql = require('mysql');
 
 // Create a MySQL connection
