@@ -1,80 +1,21 @@
+/* style.css */
+
+/* Common styles for all pages */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f2f2f2;
 }
 
 .container {
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.store-title {
-    text-align: center;
-}
-
-.ranks {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.rank {
-    width: 200px;
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.rank img {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 10px;
-}
-
-.price {
-    font-size: 16px;
-    margin: 10px 0;
-}
-
-.buy-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.buy-btn:hover {
-    background-color: #0056b3;
-}
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f2f2f2;
-}
-
-.container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
+/* Styles for store.html */
 .store-title {
     text-align: center;
 }
@@ -121,7 +62,7 @@ body {
     background-color: #0056b3;
 }
 
-/* New styles for login.html and register.html */
+/* Styles for login.html and register.html */
 h1 {
     text-align: center;
     margin-bottom: 20px;
