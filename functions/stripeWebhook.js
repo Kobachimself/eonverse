@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
 });
 
 // Handle Stripe webhook events
-async function handleStripeWebhook(req, res) {
+async function handler(req, res) {
   const sig = req.headers['stripe-signature'];
   let event;
 
@@ -49,5 +49,5 @@ function savePaymentIntent(paymentIntent) {
 }
 
 module.exports = {
-  handleStripeWebhook
+  handler
 };
