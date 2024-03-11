@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
 });
 
 // Handle Stripe webhook events
-async function handler(req, res) {
+async function handleStripeWebhook(req, res) {
   const sig = req.headers['stripe-signature'];
   let event;
 
@@ -19,6 +19,12 @@ async function handler(req, res) {
   } catch (err) {
     console.error('Webhook Error:', err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  // Check if webhook payload exists
+  if (!event || !event.type) {
+    console.error('No webhook payload was provided');
+    return res.status(400).send('No webhook payload was provided');
   }
 
   // Handle the event
@@ -34,7 +40,7 @@ async function handler(req, res) {
   }
 
   // Return a response to acknowledge receipt of the event
-  res.json({ received: true });
+  res.send({ received: true });
 }
 
 // Function to save payment intent data to the database
@@ -49,7 +55,5 @@ function savePaymentIntent(paymentIntent) {
 }
 
 module.exports = {
-  handler
+  handleStripeWebhook
 };
-
-
