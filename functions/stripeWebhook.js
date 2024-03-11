@@ -54,5 +54,5 @@ function savePaymentIntent(paymentIntent) {
   });
 }
 
-// Export the handleStripeWebhook function directly
-module.exports = handleStripeWebhook;
+// Export the handleStripeWebhook function as the handler
+module.exports.handler = handleStripeWebhook;
