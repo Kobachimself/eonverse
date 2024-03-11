@@ -58,13 +58,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $('.accordion-item').click(function(){
-            $(this).toggleClass('active').next('.accordion-content').slideToggle();
-            $('.accordion-content').not($(this).next()).slideUp();
-            $('.accordion-item').not($(this)).removeClass('active');
-        });
+$(document).ready(function(){
+    $('.accordion-item').click(function(){
+        $(this).toggleClass('active').next('.accordion-content').slideToggle();
+        $('.accordion-content').not($(this).next()).slideUp();
+        $('.accordion-item').not($(this)).removeClass('active');
     });
+});
 </script>
 
 });
