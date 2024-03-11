@@ -81,7 +81,7 @@
 <body>
     <div class="container">
         <h1>Register</h1>
-        <form action="/api/register" method="POST">
+        <form id="registrationForm" action="/api/register" method="POST">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
             <label for="discord_username">Discord Username:</label>
@@ -92,32 +92,32 @@
     </div>
 
     <script>
-    document.getElementById('registerForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
+        document.getElementById('registrationForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
 
-        const formData = new FormData(this);
-        const discordUsername = formData.get('discordUsername');
+            const formData = new FormData(this);
+            const discordUsername = formData.get('discord_username');
 
-        try {
-            const response = await fetch('/api/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ discordUsername })
-            });
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ discordUsername })
+                });
 
-            if (!response.ok) {
-                throw new Error('Failed to register');
+                if (!response.ok) {
+                    throw new Error('Failed to register');
+                }
+
+                const data = await response.json();
+                // Optionally handle the response data (e.g., show a success message)
+                console.log('Registration successful:', data);
+            } catch (error) {
+                console.error('Registration failed:', error.message);
             }
-
-            const data = await response.json();
-            // Optionally handle the response data (e.g., show a success message)
-            console.log('Registration successful:', data);
-        } catch (error) {
-            console.error('Registration failed:', error.message);
-        }
-    });
-</script>
+        });
+    </script>
 </body>
 </html>
