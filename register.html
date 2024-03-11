@@ -91,33 +91,34 @@
         <p>Already have an account? <a href="login.html">Login here</a></p>
     </div>
 
-    <script>
-        document.getElementById('registrationForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+ <script>
+    document.getElementById('registrationForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
 
-            const formData = new FormData(this);
-            const discordUsername = formData.get('discord_username');
+        const formData = new FormData(this);
+        const discordUsername = formData.get('discord_username'); // Ensure correct field name
 
-            try {
-                const response = await fetch('/api/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ discordUsername })
-                });
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ discordUsername })
+            });
 
-                if (!response.ok) {
-                    throw new Error('Failed to register');
-                }
-
-                const data = await response.json();
-                console.log('Registration successful:', data);
-                window.location.href = '/login.html'; // Redirect to login page after successful registration
-            } catch (error) {
-                console.error('Registration failed:', error.message);
+            if (!response.ok) {
+                throw new Error('Failed to register');
             }
-        });
-    </script>
+
+            const data = await response.json();
+            console.log('Registration successful:', data);
+            window.location.href = '/login.html'; // Redirect to login page after successful registration
+        } catch (error) {
+            console.error('Registration failed:', error.message);
+        }
+    });
+</script>
+
 </body>
 </html>
