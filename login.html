@@ -1,44 +1,19 @@
-<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>EonVerse Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Login</h1>
-    <form id="loginForm">
-        <label for="username">Minecraft Username:</label>
-        <input type="text" id="username" name="username" required>
-        <button type="submit">Login</button>
-    </form>
-
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            try {
-                const response = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ username })
-                });
-                if (response.ok) {
-                    window.location.href = '/store';
-                } else {
-                    // Handle login error
-                    console.error('Login error:', response.statusText);
-                    alert('Login failed. Please try again.');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                // Handle login error
-                alert('An error occurred. Please try again later.');
-            }
-        });
-    </script>
+    <div class="container">
+        <h1>EonVerse Login</h1>
+        <form id="loginForm">
+            <label for="username">Minecraft Username:</label>
+            <input type="text" id="username" name="username" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
 </body>
 </html>
