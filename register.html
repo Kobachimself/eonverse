@@ -82,7 +82,7 @@
     <div class="container">
         <h1>Register</h1>
         <form id="registrationForm" action="/api/register" method="POST">
-            <label for="username">Username:</label>
+            <label for="username">Minecraft Username:</label>
             <input type="text" id="username" name="username" required>
             <label for="discord_username">Discord Username:</label>
             <input type="text" id="discord_username" name="discord_username" required>
@@ -112,8 +112,8 @@
                 }
 
                 const data = await response.json();
-                // Optionally handle the response data (e.g., show a success message)
                 console.log('Registration successful:', data);
+                window.location.href = '/login.html'; // Redirect to login page after successful registration
             } catch (error) {
                 console.error('Registration failed:', error.message);
             }
