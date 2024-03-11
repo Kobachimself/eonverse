@@ -3,9 +3,9 @@ const mysql = require('mysql2/promise');
 
 exports.handler = async function(event, context) {
   try {
-    const { discordUsername, minecraftUsername } = JSON.parse(event.body);
+    const { username, discordUsername } = JSON.parse(event.body);
 
-    // Connect to MySQL database
+    // Connect to MySQL database (using your existing configuration)
     const connection = await mysql.createConnection({
       host: 'b5qr92bncfhw5gsnuz3b-mysql.services.clever-cloud.com',
       user: 'uulkeempqmal8d36',
@@ -14,7 +14,7 @@ exports.handler = async function(event, context) {
     });
 
     // Query database to check if the provided usernames exist and match
-    const [rows] = await connection.execute('SELECT * FROM users WHERE discord_username = ? AND minecraft_username = ?', [discordUsername, minecraftUsername]);
+    const [rows] = await connection.execute('SELECT * FROM users WHERE discord_username = ? AND minecraft_username = ?', [discordUsername, username]);
     
     // Close database connection
     await connection.end();
@@ -24,7 +24,7 @@ exports.handler = async function(event, context) {
       // Return a successful response with appropriate status code and data
       return {
         statusCode: 200,
-        body: JSON.stringify({ message: 'Login successful', discordUsername, minecraftUsername })
+        body: JSON.stringify({ message: 'Login successful', discordUsername, username })
       };
     } else {
       // Return a response indicating login failure
@@ -42,3 +42,33 @@ exports.handler = async function(event, context) {
   }
 };
 
+// Client-side JavaScript code
+document.addEventListener("DOMContentLoaded", async function () {
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const username = formData.get('username');
+        const discordUsername = formData.get('discord_username');
+
+        try {
+            const response = await fetch('/.netlify/functions/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, discordUsername })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to login');
+            }
+
+            const data = await response.json();
+            console.log('Login successful:', data);
+            window.location.href = '/store.html'; // Redirect to store page after successful login
+        } catch (error) {
+            console.error('Login failed:', error.message);
+        }
+    });
+});
