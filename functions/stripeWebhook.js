@@ -1,5 +1,6 @@
 const stripe = require('stripe')('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');
 const mysql = require('mysql');
+const CustomResponse = require('./customResponse');
 
 // Create a MySQL connection
 const connection = mysql.createConnection({
@@ -18,13 +19,21 @@ async function handleStripeWebhook(req, res) {
     event = stripe.webhooks.constructEvent(req.rawBody, sig, 'whsec_oGctvojR4zFNMsq3Pv06LemflNhjT0Nr');
   } catch (err) {
     console.error('Webhook Error:', err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    // Create a CustomResponse object
+    const customRes = new CustomResponse(res);
+    // Set status code and send response
+    customRes.status(400).json({ error: `Webhook Error: ${err.message}` });
+    return;
   }
 
   // Check if webhook payload exists
   if (!event || !event.type) {
     console.error('No webhook payload was provided');
-    return res.status(400).send('No webhook payload was provided');
+    // Create a CustomResponse object
+    const customRes = new CustomResponse(res);
+    // Set status code and send response
+    customRes.status(400).json({ error: 'No webhook payload was provided' });
+    return;
   }
 
   // Handle the event
@@ -39,8 +48,10 @@ async function handleStripeWebhook(req, res) {
       console.log(`Unhandled event type: ${event.type}`);
   }
 
-  // Return a response to acknowledge receipt of the event
-  res.json({ received: true });
+  // Create a CustomResponse object
+  const customRes = new CustomResponse(res);
+  // Send response with status code 200
+  customRes.json({ received: true });
 }
 
 // Function to save payment intent data to the database
@@ -54,5 +65,6 @@ function savePaymentIntent(paymentIntent) {
   });
 }
 
-// Export the handleStripeWebhook function as the handler
-module.exports.handler = handleStripeWebhook;
+module.exports = {
+  handleStripeWebhook
+};
