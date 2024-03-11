@@ -14,7 +14,10 @@ exports.handler = async (event) => {
     // Return a successful response with appropriate status code and data
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: 'Login confirmation received' })
+      headers: {
+        'Location': '/store.html', // Redirect to store.html
+      },
+      body: JSON.stringify({ message: 'Login confirmation successfully', redirect: '/store.html' })
     };
   } catch (error) {
     // Handle errors and return an appropriate response
