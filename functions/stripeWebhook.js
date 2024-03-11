@@ -1,9 +1,8 @@
 const stripe = require('stripe')('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');
 const mysql = require('mysql');
 
-// Create a MySQL connection pool
-const pool = mysql.createPool({
-  connectionLimit : 10,
+// Create a MySQL connection
+const connection = mysql.createConnection({
   host: 'b5qr92bncfhw5gsnuz3b-mysql.services.clever-cloud.com',
   user: 'uulkeempqmal8d36',
   password: '8p0vt4LQ7zS5o04gKQeZ',
@@ -46,7 +45,7 @@ async function handleStripeWebhook(req, res) {
 
 // Function to save payment intent data to the database
 function savePaymentIntent(paymentIntent) {
-  pool.query('INSERT INTO payment_intents SET ?', paymentIntent, (error, results, fields) => {
+  connection.query('INSERT INTO payment_intents SET ?', paymentIntent, (error, results, fields) => {
     if (error) {
       console.error('Error saving payment intent to database:', error);
     } else {
@@ -55,6 +54,5 @@ function savePaymentIntent(paymentIntent) {
   });
 }
 
-module.exports = {
-  handleStripeWebhook
-};
+// Export the handleStripeWebhook function directly
+module.exports = handleStripeWebhook;
