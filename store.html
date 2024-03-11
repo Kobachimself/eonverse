@@ -119,10 +119,38 @@
                 border-color: #218838; /* Darker Green */
             }
         }
+
+        /* Login and Register buttons */
+        .auth-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .auth-buttons a {
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            background-color: #28a745; /* Green */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+
+        .auth-buttons a:hover {
+            background-color: #218838; /* Darker Green */
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="auth-buttons">
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </div>
         <h1>EonVerse Store</h1>
         <div class="ranks">
             <div class="rank" data-price="500" data-name="VIP Rank">
