@@ -44,3 +44,4 @@ exports.handler = async (event, context) => {
     await connection.end();
   }
 };
+
