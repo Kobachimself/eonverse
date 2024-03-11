@@ -1,13 +1,13 @@
 // loginFunction.js
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
 exports.handler = async (event, context) => {
   // Parse the incoming request body
   const requestBody = JSON.parse(event.body);
-  const { username, password } = requestBody;
+  const { username, discordUsername } = requestBody;
 
   // Create a MySQL connection
-  const connection = mysql.createConnection({
+  const connection = await mysql.createConnection({
     host: 'b5qr92bncfhw5gsnuz3b-mysql.services.clever-cloud.com',
     user: 'uulkeempqmal8d36',
     database: 'b5qr92bncfhw5gsnuz3b',
@@ -16,14 +16,8 @@ exports.handler = async (event, context) => {
   });
 
   try {
-    // Connect to the database
-    connection.connect();
-
     // Execute a query to check if the user exists
-    const [rows, fields] = await connection.promise().query('SELECT * FROM users WHERE username = ? AND discord username = ?', [username, discord username]);
-
-    // Close the connection
-    connection.end();
+    const [rows, fields] = await connection.query('SELECT * FROM users WHERE username = ? AND discord_username = ?', [username, discordUsername]);
 
     // Check if the user was found
     if (rows.length === 1) {
@@ -45,5 +39,8 @@ exports.handler = async (event, context) => {
       statusCode: 500,
       body: JSON.stringify({ error: 'An error occurred while processing your request' })
     };
+  } finally {
+    // Close the connection
+    await connection.end();
   }
 };
