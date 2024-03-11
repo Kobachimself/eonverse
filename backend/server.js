@@ -7,7 +7,10 @@ const port = process.env.PORT || 3000;
 
 // Serve static files (optional)
 app.use(express.static(resolve(__dirname, 'public')));
-
+// Define the /api/login endpoint
+app.post('/api/login', async (req, res) => {
+    try {
+        const { username, discordUsername } = req.body;
 // Define serverless function for handling Stripe webhook events
 exports.handler = async (event) => {
     const sig = event.headers['stripe-signature'];
