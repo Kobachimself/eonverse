@@ -40,7 +40,7 @@ async function handleStripeWebhook(req, res) {
   }
 
   // Return a response to acknowledge receipt of the event
-  res.send({ received: true });
+  res.json({ received: true });
 }
 
 // Function to save payment intent data to the database
