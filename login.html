@@ -1,13 +1,15 @@
+<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>EonVerse Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Login</h1>
     <div class="container">
+        <h1>Login</h1>
         <form id="loginForm">
             <label for="username">Minecraft Username:</label>
             <input type="text" id="username" name="username" required>
@@ -30,10 +32,9 @@
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    // Assuming you want to store the token in localStorage
                     localStorage.setItem('token', data.token);
-                    // Redirect to the store or dashboard page after successful login
-                    window.location.href = '/store';
+                    // Redirect to store.html if username is registered
+                    window.location.href = `/store?username=${username}`;
                 } else {
                     console.error('Login failed:', response.statusText);
                     alert('Login failed. Please try again.');
