@@ -6,12 +6,16 @@ async function handleStripeWebhook(req, res) {
   const sig = req.headers['stripe-signature'];
   let event;
 
-  try {
-    event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
-  } catch (err) {
-    console.error('Webhook Error:', err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
-  }
+ try {
+  event = stripe.webhooks.constructEvent(req.rawBody, sig, 'whsec_oGctvojR4zFNMsq3Pv06LemflNhjT0Nr');
+} catch (err) {
+  console.error('Webhook Error:', err.message);
+  res.statusCode = 400; // Set the status code
+  res.setHeader('Content-Type', 'application/json'); // Set the response content type
+  res.end(JSON.stringify({ error: 'Webhook Error: ' + err.message }));
+  return; // Exit the function
+}
+
 
   // Handle the event
   switch (event.type) {
