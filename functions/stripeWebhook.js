@@ -15,6 +15,21 @@ async function handleStripeWebhook(req, res) {
   res.end(JSON.stringify({ error: 'Webhook Error: ' + err.message }));
   return; // Exit the function
 }
+  // Example of handling the response object in a Netlify serverless function
+async function handleStripeWebhook(event) {
+  // Perform operations and generate response
+  const responseBody = { message: 'Stripe webhook received successfully!' };
+
+  // Return the response
+  return {
+    statusCode: 200, // Set the status code
+    body: JSON.stringify(responseBody), // Set the response body
+    headers: {
+      'Content-Type': 'application/json', // Set the content type header
+    },
+  };
+}
+  
 
 
   // Handle the event
