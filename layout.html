@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ store.name }} | {{ __(page.title) }}</title>
+    <link href="/templates/209/css/style.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ store.favicon }}">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #1e1e1e;
+        color: #fff;
+    }
+
+    .container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-container {
+        max-width: 400px;
+        padding: 20px;
+        background-color: #2b2b2b; /* Dark Gray */
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #28a745; /* Green */
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin-bottom: 10px;
+        color: #28a745; /* Green */
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #2b2b2b; /* Dark Gray */
+        color: #fff;
+    }
+
+    button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #28a745; /* Green */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #218838; /* Darker Green */
+    }
+
+    p {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    a {
+        color: #28a745; /* Green */
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        color: #218838; /* Darker Green */
+    }
+</style>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36735942-3']);
+        _gaq.push(['_trackPageview']);
+        {% if store.googleAnalytics %}
+            _gaq.push(['b._setAccount', '{{ store.googleAnalytics }}']);
+            _gaq.push(['b._trackPageview']);
+        {% endif %}
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <style>{{ store.css|raw }}</style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                {% if store.logo %}
+                    <a href="/"><img src="{{ store.logo }}" /></a>
+                {% else %}
+                    <span>{{ store.name }}</span>
+                {% endif %}
+            </div>
+            <div class="buttons">
+                <div class="toolbar">
+                    <div class="logout">
+                        {% if basket.username %} 
+                            <a href="/checkout/logout" class="btn btn-danger">{{ __("Logout") }}</a> 
+                        {% else %} 
+                            <a href="/login" class="btn btn-info">{{ __("Login") }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="currency">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            {{ basket.currency }} <span class="fa fa-caret-down"></span>
+                        </button>
+                        <!-- Currency Dropdown Menu -->
+                    </div>
+                    <div class="basket">
+                        <!-- Basket Dropdown Menu -->
+                    </div>
+                </div>
+            </div>
+        </div> 
+        
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Navbar content -->
+        </nav>
+        
+        <div class="notification">
+            <!-- Notification content -->
+        </div>
+
+        {% block content %}
+            {# Include the username input page content here #}
+            {% include 'UsernameInput.html' %}
+        {% endblock %}
+
+        <div class="footer">
+            <!-- Footer content -->
+        </div>
+    </div>
+    
+    <div class="modal" id="popup-modal" tabindex="-1" role="dialog"></div>
+    
+    {% if page.category == "checkout" %}
+        <script src="https://js.stripe.com/v2/"></script>
+    {% endif %}
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>  
+    <script src="/templates/209/js/bootstrap.min.js"></script>
+    <script src="/templates/209/js/skin.min.js"></script>
+    <script src="/templates/209/js/site.js"></script>
+    <script>
+        jQuery(function(){
+            // JavaScript code
+        });
+    </script>
+</body>
+</html>
