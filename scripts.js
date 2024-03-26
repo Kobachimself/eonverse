@@ -60,6 +60,46 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
+    // Add event listener to the login form
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const username = formData.get('username');
+        const discordUsername = formData.get('discord_username');
+
+        try {
+            // Send login request to the server
+            const response = await fetch('https://eonverse-store-44159183db87.herokuapp.com/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ minecraftUsername: username, discordUsername })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to login');
+            }
+
+            // Parse the response JSON
+            const data = await response.json();
+
+            // Check if login was successful
+            if (data && data.redirectUrl) {
+                // Redirect to the specified URL after successful login
+                window.location.href = data.redirectUrl;
+            } else {
+                // Handle invalid response or missing redirect URL
+                throw new Error('Invalid response from server');
+            }
+        } catch (error) {
+            console.error('Login failed:', error.message);
+            // Handle login failure (e.g., display error message)
+            alert('Login failed. Please try again.');
+        }
+    });
+
     // Add your jQuery code here
     $(document).ready(function(){
         $('.accordion-item').click(function(){
