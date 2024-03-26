@@ -48,7 +48,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Function to check login status
     async function checkLoginStatus() {
         try {
-            const response = await fetch('/check-login-status');
+            const response = await fetch('https://eonverse-store-44159183db87.herokuapp.com/api/login', {
+                method: 'GET',
+                credentials: 'same-origin', // Send cookies for authentication
+            });
             const { loggedIn } = await response.json();
             return loggedIn;
         } catch (error) {
@@ -56,15 +59,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             return false;
         }
     }
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function(){
-    $('.accordion-item').click(function(){
-        $(this).toggleClass('active').next('.accordion-content').slideToggle();
-        $('.accordion-content').not($(this).next()).slideUp();
-        $('.accordion-item').not($(this)).removeClass('active');
+
+    // Add your jQuery code here
+    $(document).ready(function(){
+        $('.accordion-item').click(function(){
+            $(this).toggleClass('active').next('.accordion-content').slideToggle();
+            $('.accordion-content').not($(this).next()).slideUp();
+            $('.accordion-item').not($(this)).removeClass('active');
+        });
     });
-});
-</script>
 
 });
