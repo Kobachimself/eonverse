@@ -89,40 +89,10 @@
             <input type="text" id="discord_username" name="discord_username" required>
             <button type="submit" id="loginBtn">Login</button>
         </form>
+        <p>Or login with Discord:</p>
+        <button id="discordAuthBtn">Login with Discord</button>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", async function () {
-            document.getElementById('loginForm').addEventListener('submit', async function(event) {
-                event.preventDefault();
-
-                const formData = new FormData(this);
-                const username = formData.get('username');
-                const discordUsername = formData.get('discord_username');
-
-                try {
-                    const response = await fetch('https://eonverse-store-44159183db87.herokuapp.com/api/login', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ username, discordUsername })
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Failed to login');
-                    }
-
-                    const data = await response.json();
-                    console.log('Login successful:', data);
-
-                    // Redirect to store.html after successful login
-                    window.location.href = 'store.html';
-                } catch (error) {
-                    console.error('Login failed:', error.message);
-                }
-            });
-        });
-    </script>
+    <script src="scripts.js"></script>
 </body>
 </html>
